@@ -1,0 +1,210 @@
+{
+  "name": "omni-voice-desk",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Omni Voice Desk — hands-free LFM3-Omni desktop with local coding agents",
+  "author": {
+    "name": "Omni Voice Desk",
+    "email": "omni-voice-desk@users.noreply.github.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/labKnowledge/omni-voice-desk",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/labKnowledge/omni-voice-desk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/labKnowledge/omni-voice-desk/issues"
+  },
+  "desktopName": "omni-voice-desk.desktop",
+  "main": "electron/main.cjs",
+  "type": "commonjs",
+  "scripts": {
+    "postinstall": "node scripts/ensure-electron.cjs",
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "clean": "node scripts/clean.cjs",
+    "ensure-electron": "node scripts/ensure-electron.cjs",
+    "icons": "node scripts/generate-icons.cjs",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux",
+    "release": "node scripts/release.cjs",
+    "packages": "bash scripts/build-packages.sh",
+    "publish:github": "bash scripts/publish-github-release.sh",
+    "install:mac": "bash scripts/install-mac.sh",
+    "install:linux": "bash scripts/install-linux.sh",
+    "install:win": "powershell -ExecutionPolicy Bypass -File ./scripts/install-windows.ps1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "electron": "^39.0.0",
+    "electron-builder": "^26.0.12",
+    "png-to-ico": "^3.0.1"
+  },
+  "allowScripts": {
+    "electron@39.8.10": true,
+    "electron-winstaller@5.4.0": true
+  },
+  "build": {
+    "appId": "desk.omni.voice",
+    "productName": "Omni Voice Desk",
+    "copyright": "Copyright © Omni Voice Desk",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "electron/**/*",
+      "renderer/**/*",
+      "assets/icon.png",
+      "assets/icon.icns",
+      "assets/icon.ico",
+      "assets/tray.png",
+      "assets/tray@2x.png",
+      "assets/icons/**/*",
+      "package.json"
+    ],
+    "extraMetadata": {
+      "main": "electron/main.cjs"
+    },
+    "asar": true,
+    "executableName": "OmniVoiceDesk",
+    "artifactName": "OmniVoiceDesk-${version}-${os}-${arch}.${ext}",
+    "mac": {
+      "category": "public.app-category.productivity",
+      "icon": "assets/icon.icns",
+      "artifactName": "OmniVoiceDesk-${version}-mac-${arch}.${ext}",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "darkModeSupport": true,
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "title": "OmniVoiceDesk-${version}",
+      "icon": "assets/icon.icns",
+      "backgroundColor": "#e9ecef",
+      "window": {
+        "width": 560,
+        "height": 380
+      },
+      "contents": [
+        {
+          "x": 140,
+          "y": 180,
+          "type": "file"
+        },
+        {
+          "x": 420,
+          "y": 180,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "icon": "assets/icon.ico",
+      "artifactName": "OmniVoiceDesk-${version}-win-${arch}.${ext}",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Omni Voice Desk",
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "installerHeaderIcon": "assets/icon.ico",
+      "deleteAppDataOnUninstall": false,
+      "runAfterFinish": true,
+      "artifactName": "OmniVoiceDesk-${version}-win-${arch}-setup.${ext}"
+    },
+    "portable": {
+      "artifactName": "OmniVoiceDesk-${version}-win-${arch}-portable.${ext}"
+    },
+    "linux": {
+      "icon": "assets/icons",
+      "category": "Utility",
+      "maintainer": "Omni Voice Desk <omni-voice-desk@users.noreply.github.com>",
+      "synopsis": "Hands-free Omni voice desk with local coding agents",
+      "executableName": "omni-voice-desk",
+      "artifactName": "OmniVoiceDesk-${version}-linux-${arch}.${ext}",
+      "syncDesktopName": true,
+      "desktop": {
+        "entry": {
+          "Name": "Omni Voice Desk",
+          "Comment": "Hands-free LFM3-Omni desktop companion",
+          "StartupWMClass": "omni-voice-desk",
+          "Terminal": "false",
+          "Type": "Application",
+          "Categories": "Utility;AudioVideo;Development;"
+        }
+      },
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "deb": {
+      "artifactName": "OmniVoiceDesk-${version}-linux-${arch}.${ext}"
+    },
+    "appImage": {
+      "artifactName": "OmniVoiceDesk-${version}-linux-${arch}.${ext}"
+    }
+  }
+}

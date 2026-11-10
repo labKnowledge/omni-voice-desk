@@ -1,0 +1,27 @@
+# Dependencies & caches
+node_modules/
+.npm/
+.cache/
+
+# Build / installers (rebuild with npm run packages)
+dist/
+out/
+release/
+*.blockmap
+
+# Electron / OS noise
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+*~
+
+# Local app data (never commit)
+.omni-voice-desk/
+.env
+.env.*
+
+# Editor
+.idea/
+.vscode/
+*.code-workspace

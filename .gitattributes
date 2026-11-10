@@ -1,0 +1,9 @@
+# Omni Voice Desk — keep line endings consistent for scripts
+*.sh text eol=lf
+*.ps1 text eol=crlf
+*.cjs text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.md text eol=lf
+*.json text eol=lf
